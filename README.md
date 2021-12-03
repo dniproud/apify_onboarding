@@ -2,55 +2,24 @@
 
 The first project for Apify onboarding tutorial
 
-## Quiz
+## Tutorial II Apify SDK Quiz
 
-Where and how can you use JQuery with the SDK?
-What is the main difference between Cheerio and JQuery?
-When would you use CheerioCrawler and what are its limitations?
-What are the main classes for managing requests and when and why would you use one instead of another?
-How can you extract data from a page in Puppeteer without using JQuery?
-What is the default concurrency/parallelism the SDK uses?
-
-
-## Description
-
-The actor will receive input in this format, where the keyword will vary:
-
-{
-    "keyword": "phone"
-}
-
-You will search for products on Amazon.com using the keyword with this URL: https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=${keyword}
-
-Get all product ASINs from the first page of results. The ASIN is the product ID on Amazon. It looks like this: B0775MV9K2. You can get to each product page just with an ASIN using this URL: https://www.amazon.com/dp/${ASIN}
-
-From here, go to each product's detail page and save its title, url and description
-
-Now for each product, you need to scrape all its offers. You can get to offers of each product with this URL: https://www.amazon.com/gp/offer-listing/${ASIN}
-Note: In February 2021 Amazon started A/B testing the offer page. In some cases it redirects back to the product page and shows the offers in the side panel. You can scrape the offers from the side panel instead, so catch both cases if possible.
-
-Scrape and push all offers to the dataset. Each offer should be one dataset item. Add the title, url, description, and keyword fields from the product to each offer. Additionally, each offer should have its specific sellerName, price, and shippingPrice (if shippingPrice is not visible, store null to this property).
-Example output: (Locally, each item is a separate JSON)
-
-[
-    {
-		"title": "Apple iPhone 6 a1549 16GB Space Gray Unlocked (Certified Refurbished)",
-		"url": "https://www.amazon.com/Apple-iPhone-Unlocked-Certified-Refurbished/dp/B00YD547Q6/ref=sr_1_2?s=wireless&ie=UTF8&qid=1539772626&sr=1-2&keywords=iphone",
-		"description" : "What's in the box: Certified Refurbished iPhone 6 Space Gray 16GB Unlocked , USB Cable/Adapter. Comes in a Generic Box with a 1 Year Limited Warranty.",
-		"keyword": "iphone",
-        	"sellerName": "Blutek Intl",
-		"price": "$162.97",
-		"shippingPrice": "free"
-    }, 
-    {
-         "title": "Apple iPhone 6 a1549 16GB Space Gray Unlocked (Certified Refurbished)",
-	 	"url": "https://www.amazon.com/Apple-iPhone-Unlocked-Certified-Refurbished/dp/B00YD547Q6/ref=sr_1_2?s=wireless&ie=UTF8&qid=1539772626&sr=1-2&keywords=iphone",
-	 	"description" : "What's in the box: Certified Refurbished iPhone 6 Space Gray 16GB Unlocked , USB Cable/Adapter. Comes in a Generic Box with a 1 Year Limited Warranty.",
-	 	"keyword": "iphone",
-         	"sellerName": "PLATINUM DEALS",
-	 	"price": "$169.98",
-	 	"shippingPrice": "free"
-    }, 
-]
-
-When the scrape is done, call a public actor that sends emails and send an email to lukas@apify.com  with a title containing your name and "This is for the Apify SDK exercise", and a message with a public link to the dataset.
+### Where and how can you use jQuery with the SDK?
+  - It can be used inside the `handlePageFunction` of CheerioCrawler which provides `$` property inside an object argument of `handlePageFunction`.
+  - It can be also used inside the `evaluate` function of Puppeteer page by using injectQuery utility function.
+### What is the main difference between Cheerio and jQuery?
+  - Cheerio is implementation of core jQuery designed specifically for the server, but jQuery runs in a browser and it's designed to simplify the client-side scripting of HTML.
+### When would you use CheerioCrawler and what are its limitations?
+  - `CheerioCrawler` is easy to use and so fast in the scraping with the high rate of pages per minute. 
+  - It is also cheap in terms of computing units.
+  - It can't be applied to the most of the modern websites as they use JavaScript to create the final HTML such as React, Angular, Vue. `CheerioCrawler` uses plain HTTP requests to get HTML pages corresponding to the provided URLs, but sometimes it can be used for the modern websites as they uses many API call.
+### What are the main classes for managing requests and when and why would you use one instead of another?
+  - `Request`, `RequestList`, `RequestQueue`.
+  - We'll make use of `RequestList` and `RequestQueue` classes to specify URLs that are to be crawled.
+    - `RequestList` represents a static list of URLs that can be defined directly in the code or they can be loaded from the text file or online URLs. It's useful when adding a batch of the initial URLs before starting the crawling.
+    - `RequestQueue` offers dynamic collection of URLs which can be modified during runtime. It can be used in various crawlers such as `CheerioCrawler`, `PuppeteerCrawler`, `PlaywrightCrawler` in order to add the requests dynamically. 
+    - Both of `RequestList` and `RequestQueue` can even be used at once if needed. They should be defined in the configuration of the crawler.
+### How can you extract data from a page in Puppeteer without using jQuery?
+  - Puppeteer pages have a handy `evaluate()` function that lets you execute JavaScript in the Chrome window. The `evaluate()` function is the most flexible way to interact with Puppeteer, because it lets you control Chrome using browser APIs like `document.querySelector()`
+### What is the default concurrency/parallelism the SDK uses?
+  - Apify SDK uses `AutoscaledPool` for the concurrency/parallerism which manages a pool of asynchronous resource-intensive tasks that are executed in parallel. This pool only starts new tasks if there is enough free CPU and memory available and the Javascript event loop is not blocked
