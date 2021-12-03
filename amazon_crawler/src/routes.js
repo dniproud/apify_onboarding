@@ -2,6 +2,14 @@ const Apify = require('apify');
 
 const { utils: { log } } = Apify;
 
+/**
+ * 
+ * @param {Object} context
+ * @param {Apify.Request} context.request
+ * @param {$} context.$
+ * @param {requestQueue} context.crawler.requestQueue
+ * 
+ */
 exports.handleStart = async ({ request, $, crawler: { requestQueue } }) => {
     // Handle Start URLs
 
@@ -28,6 +36,15 @@ exports.handleStart = async ({ request, $, crawler: { requestQueue } }) => {
     }
 };
 
+/**
+ * 
+ * @param {Object} context
+ * @param {Apify.Request} context.request
+ * @param {$} context.$
+ * @param {requestQueue} context.crawler.requestQueue
+ * @param {session} context.session
+ * 
+ */
 exports.handleDetail = async ({ request, $, crawler: { requestQueue }, session }) => {
     // Handle details
 
@@ -61,6 +78,14 @@ exports.handleDetail = async ({ request, $, crawler: { requestQueue }, session }
     })
 };
 
+
+/**
+ *
+ * @param {Object} context
+ * @param {Apify.Request} context.request
+ * @param {$} context.$
+ * 
+ */
 exports.handleOffer = async ({ request, $ }) => {
     // Handle offers
     const { asinNumber, detail: { title, description, url, keyword } } = request.userData;
