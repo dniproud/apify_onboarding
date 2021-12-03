@@ -1,20 +1,24 @@
 {
-  "title": "CheerioCrawler Template",
-  "description": "lorem ipsum",
+  "title": "Apify onboarding project",
+  "description": "This is the onboarding project to crawl Amazon with the given keyword and send the email once done crawling",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "startUrls": {
-      "title": "Start URLs",
-      "type": "array",
-      "description": "URLs to start with.",
-      "editor": "requestListSources",
-      "prefill": [
-        { "url": "https://apify.com" }
-      ]
+    "keyword": {
+      "title": "Keyword",
+      "type": "string",
+      "description": "Search keyword",
+      "editor": "textfield"
+    },
+    "to_email": {
+      "title": "e-mail",
+      "type": "string",
+      "description": "receiver email",
+      "default": "lukas@apify.com",
+      "editor": "textfield"
     }
   },
   "required": [
-    "startUrls"
+    "keyword"
   ]
 }

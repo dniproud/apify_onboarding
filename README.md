@@ -2,92 +2,55 @@
 
 The first project for Apify onboarding tutorial
 
-## Getting started
+## Quiz
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Where and how can you use JQuery with the SDK?
+What is the main difference between Cheerio and JQuery?
+When would you use CheerioCrawler and what are its limitations?
+What are the main classes for managing requests and when and why would you use one instead of another?
+How can you extract data from a page in Puppeteer without using JQuery?
+What is the default concurrency/parallelism the SDK uses?
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/dniproud/apify_onboarding.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://gitlab.com/dniproud/apify_onboarding/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:b6c569dd785a5dbf63d68b8ab95c38e0?https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+The actor will receive input in this format, where the keyword will vary:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+{
+    "keyword": "phone"
+}
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+You will search for products on Amazon.com using the keyword with this URL: https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=${keyword}
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+Get all product ASINs from the first page of results. The ASIN is the product ID on Amazon. It looks like this: B0775MV9K2. You can get to each product page just with an ASIN using this URL: https://www.amazon.com/dp/${ASIN}
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+From here, go to each product's detail page and save its title, url and description
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Now for each product, you need to scrape all its offers. You can get to offers of each product with this URL: https://www.amazon.com/gp/offer-listing/${ASIN}
+Note: In February 2021 Amazon started A/B testing the offer page. In some cases it redirects back to the product page and shows the offers in the side panel. You can scrape the offers from the side panel instead, so catch both cases if possible.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Scrape and push all offers to the dataset. Each offer should be one dataset item. Add the title, url, description, and keyword fields from the product to each offer. Additionally, each offer should have its specific sellerName, price, and shippingPrice (if shippingPrice is not visible, store null to this property).
+Example output: (Locally, each item is a separate JSON)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+[
+    {
+		"title": "Apple iPhone 6 a1549 16GB Space Gray Unlocked (Certified Refurbished)",
+		"url": "https://www.amazon.com/Apple-iPhone-Unlocked-Certified-Refurbished/dp/B00YD547Q6/ref=sr_1_2?s=wireless&ie=UTF8&qid=1539772626&sr=1-2&keywords=iphone",
+		"description" : "What's in the box: Certified Refurbished iPhone 6 Space Gray 16GB Unlocked , USB Cable/Adapter. Comes in a Generic Box with a 1 Year Limited Warranty.",
+		"keyword": "iphone",
+        	"sellerName": "Blutek Intl",
+		"price": "$162.97",
+		"shippingPrice": "free"
+    }, 
+    {
+         "title": "Apple iPhone 6 a1549 16GB Space Gray Unlocked (Certified Refurbished)",
+	 	"url": "https://www.amazon.com/Apple-iPhone-Unlocked-Certified-Refurbished/dp/B00YD547Q6/ref=sr_1_2?s=wireless&ie=UTF8&qid=1539772626&sr=1-2&keywords=iphone",
+	 	"description" : "What's in the box: Certified Refurbished iPhone 6 Space Gray 16GB Unlocked , USB Cable/Adapter. Comes in a Generic Box with a 1 Year Limited Warranty.",
+	 	"keyword": "iphone",
+         	"sellerName": "PLATINUM DEALS",
+	 	"price": "$169.98",
+	 	"shippingPrice": "free"
+    }, 
+]
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-
+When the scrape is done, call a public actor that sends emails and send an email to lukas@apify.com  with a title containing your name and "This is for the Apify SDK exercise", and a message with a public link to the dataset.
