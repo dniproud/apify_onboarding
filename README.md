@@ -23,3 +23,24 @@ The first project for Apify onboarding tutorial
   - Puppeteer pages have a handy `evaluate()` function that lets you execute JavaScript in the Chrome window. The `evaluate()` function is the most flexible way to interact with Puppeteer, because it lets you control Chrome using browser APIs like `document.querySelector()`
 ### What is the default concurrency/parallelism the SDK uses?
   - Apify SDK uses `AutoscaledPool` for the concurrency/parallerism which manages a pool of asynchronous resource-intensive tasks that are executed in parallel. This pool only starts new tasks if there is enough free CPU and memory available and the Javascript event loop is not blocked
+
+
+## Tutorial III Apify Actors & Webhooks Quiz
+
+### How do you allocate more CPU for your actor run?
+  - It can be assigned the higher memory capacity to allocate more CPU. 
+### How can you get the exact time when the actor was started from within the running actor process?
+  - Using the `APIFY_STARTED_AT` environment variable from the actor's process. It can be accessed from Node.js using the `process.env` object as follows: `process.env.APIFY_STARTED_AT`.
+### Which are the default storages an actor run is allocated (connected to)?
+  - The actors run in Docker containers so they use local storage inside these containers during their run. Apart from that, an actor run is connected to `apify_storage` containing generated datasets and `key_value_stores` with `INPUT` and `OUTPUT` json files. Running actor's state is persisted as well in case an error occurred and the actor would need to continue from the point where it stopped running. 
+### Can you change the memory allocated to a running actor?
+  - An actor can optimize their memory usage during the run through `APIFY_MEMORY_MBYTES` environment variable.
+### How can you run an actor with Puppeteer in a headful (non-headless) mode?
+  - By setting the value of `launchContext.launchOptions.headless` to `false` when calling the `PuppeteerCrawler` constructor. The value can be obtained using `APIFY_HEADLESS` environment variable - if this variable is set to 1, the headless mode is activated.
+### Imagine the server/instance the container is running on has a 32 GB, 8-core CPU. What would be the most performant (speed/cost) memory allocation for CheerioCrawler? (Hint: NodeJS processes cannot use user-created threads)
+  - 4 GB memory and the corresponding 1 CPU core as `CheerioCrawler` running in Node.js can not use more than 1 thread. Thus setup with more CPU cores would not increase crawler's speed.
+### What is the difference between RUN and CMD Dockerfile commands?
+### Does your Dockerfile need to contain a CMD command (assuming we don't want to use ENTRYPOINT which is similar)? If yes or no, why?
+### How does the FROM command work and which base images Apify provides?
+
+
