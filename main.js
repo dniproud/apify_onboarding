@@ -19,21 +19,21 @@ Apify.main(async () => {
         },
         userData: {
             keyword
-        },
-        retryCount: 5
+        }
     }]);
     const requestQueue = await Apify.openRequestQueue();
     const proxyConfiguration = await Apify.createProxyConfiguration({
         countryCode: 'US'
     });
+    
+    const errors = [];
 
     const crawler = new Apify.CheerioCrawler({
         requestList,
         requestQueue,
         proxyConfiguration,
-        // Be nice to the websites.
-        // Remove to unleash full power.
         maxConcurrency: 5,
+        maxRequestRetries: 5,
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });
@@ -46,6 +46,10 @@ Apify.main(async () => {
                     return handleStart(context);
             }
         },
+        handleFailedRequestFunction: async({error, request}) => {
+            log.error(`${request.url}: ${error.message}`);
+            errors.push(`URL: ${request.url}, ERROR: ${error.message}`)
+        }
     });
 
     log.info('Starting the crawl.');
@@ -53,11 +57,10 @@ Apify.main(async () => {
 
     const dataset = await Apify.openDataset();
     const { id: datasetId } = await dataset.getInfo();
-
     await Apify.call('apify/send-mail', {
         to: to_email,
         subject: 'Andriy Piskovskyi',
-        text: `This is for the Apify SDK exercise.\n\nDataset link: https://api.apify.com/v2/datasets/${datasetId}/items?clean=true&format=json`
+        text: `This is for the Apify SDK exercise.\n\nDataset link: https://api.apify.com/v2/datasets/${datasetId}/items?clean=true&format=json\n\n${errors.join('\n')}`
     });
     log.info(`Crawl finished. Sent the email to ${to_email}`);
 });

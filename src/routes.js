@@ -19,7 +19,6 @@ exports.handleStart = async ({ request, $, crawler: { requestQueue } }) => {
                 'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, ' +
                               'like Gecko) Chrome/94.0.4606.81 Safari/537.36'
             },
-            retryCount: 5,
             userData: {
                 label: 'DETAIL',
                 asinNumber,
@@ -49,7 +48,6 @@ exports.handleDetail = async ({ request, $, crawler: { requestQueue }, session }
             'x-requested-with': 'XMLHttpRequest',
             'cookie': cookieString
         },
-        retryCount: 5,
         userData: {
             label: 'OFFER',
             detail: {
