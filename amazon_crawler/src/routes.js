@@ -24,8 +24,7 @@ exports.handleStart = async ({ request, $, crawler: { requestQueue } }) => {
         await requestQueue.addRequest({
             url: `https://www.amazon.com/dp/${asinNumber}`,
             headers: {
-                'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, ' +
-                              'like Gecko) Chrome/94.0.4606.81 Safari/537.36'
+                'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'
             },
             userData: {
                 label: 'DETAIL',
@@ -60,8 +59,7 @@ exports.handleDetail = async ({ request, $, crawler: { requestQueue }, session }
     await requestQueue.addRequest({
         url: `https://www.amazon.com/gp/aod/ajax/ref=auto_load_aod?asin=${asinNumber}&pc=dp`,
         headers: {
-            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like ' +
-                          'Gecko) Chrome/94.0.4606.81 Safari/537.36',
+            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
             'x-requested-with': 'XMLHttpRequest',
             'cookie': cookieString
         },
@@ -84,12 +82,15 @@ exports.handleDetail = async ({ request, $, crawler: { requestQueue }, session }
  * @param {Object} context
  * @param {Apify.Request} context.request
  * @param {$} context.$
+ * @param {Object} state
+ * @param {Object} state.save
  * 
  */
-exports.handleOffer = async ({ request, $ }) => {
+exports.handleOffer = async ({ request, $ }, state) => {
     // Handle offers
     const { asinNumber, detail: { title, description, url, keyword } } = request.userData;
     const offers = [];
+    if (!state.saved[asinNumber]) state.saved[asinNumber] = 0;
 
     $('#aod-pinned-offer,#aod-offer').each((i, offer) => {
         let price = $('.a-offscreen', offer)
@@ -103,7 +104,7 @@ exports.handleOffer = async ({ request, $ }) => {
 
         let sellerName = $('#aod-offer-soldBy .a-fixed-left-grid-inner > div:last-child > *:first-child', offer)
         sellerName  = sellerName ? sellerName.text().trim() : '';
-
+        state.saved[asinNumber]++;
         offers.push({
             asinNumber,
             title,
@@ -115,5 +116,6 @@ exports.handleOffer = async ({ request, $ }) => {
             shippingPrice: shippingPrice || deliveryPrice
         });
     });
+
     await Apify.pushData(offers);
 };

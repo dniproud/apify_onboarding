@@ -12,18 +12,23 @@ const { utils: { log } } = Apify;
 Apify.main(async () => {
     const { keyword, to_email } = await Apify.getInput();
 
+    const state = await Apify.getValue('STATE') || { saved: {} };
+    Apify.events.on('persistState', async () => Apify.setValue('STATE', state));
+    setInterval(() => log.info(`Saved offers: ${JSON.stringify(state.saved, null, 2)}`), 20000);
+
     const requestList = await Apify.openRequestList('start-urls', [{
         url:`https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=${keyword}`,
         headers: {
-            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36'
+            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'
         },
         userData: {
             keyword
         }
     }]);
+
     const requestQueue = await Apify.openRequestQueue();
     const proxyConfiguration = await Apify.createProxyConfiguration({
-        countryCode: 'US'
+        groups: ['BUYPROXIES94952']
     });
     
     const errors = [];
@@ -32,14 +37,21 @@ Apify.main(async () => {
         requestList,
         requestQueue,
         proxyConfiguration,
-        maxConcurrency: 5,
-        maxRequestRetries: 5,
+        maxConcurrency: 1,
+        maxRequestsPerCrawl: 100,
+        useSessionPool: true,
+        sessionPoolOptions: {
+            maxPoolSize: 1,
+            sessionOptions: {
+                maxUsageCount: 5,
+            },
+        },
         handlePageFunction: async (context) => {
             const { url, userData: { label } } = context.request;
             log.info('Page opened.', { label, url });
             switch (label) {
                 case 'OFFER':
-                    return handleOffer(context);
+                    return handleOffer(context, state);
                 case 'DETAIL':
                     return handleDetail(context);
                 default:
